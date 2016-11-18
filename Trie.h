@@ -4,7 +4,9 @@
 #include <vector>
 #include <map>
 
-class Trie{
+class Trie{ /* 
+				A radix tree that supports fast string search and string retrieval by prefix.
+			*/
 	struct node{
 		std::map<char, int> children;
 		bool isEnd;
@@ -17,10 +19,12 @@ class Trie{
 public:
 	Trie();
 	Trie(const Trie& other);
-	void Insert(const std::string& str);
-	bool Has(const std::string& str) const;
-	std::vector<std::string> getStringsWithPrefix(const std::string& pref) const;
-	std::vector<std::string> getStringsSorted() const;
+	void Insert(const std::string& str); // Adds a string to the trie.
+	bool Has(const std::string& str) const; // Checks whether a string is in the trie.
+	std::vector<std::string> getStringsWithPrefix(const std::string& pref) const; /* Retrieves all strings with a given prefix sorted
+																				     lexicographically.
+																				  */
+	std::vector<std::string> getStringsSorted() const; // Retrieves all strings in the trie sorted lexicographically.
 };
 
 #endif
