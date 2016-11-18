@@ -2,15 +2,14 @@
 #define SEG_TREE_H
 
 #include <vector>
-using namespace std;
 
 template<class node>
 class SegmentTree{ /* A tree that supports query and update operations in O(log(n)). A Combine(node, node) function must be defined,
 				   where the arguments are the answers to the queries on two contiguous ranges [s1, e1] and [e1, e2], 
 				   and the return value is the answer to the query on [s1, e2].
 					*/
-	vector<node> tree; // The tree, the root node is at 1 and the children of the node at x are in x * 2 and x * 2 + 1.
-	vector<node> arr; // The array which the segment tree is constructed upon.
+	std::vector<node> tree; // The tree, the root node is at 1 and the children of the node at x are in x * 2 and x * 2 + 1.
+	std::vector<node> arr; // The array which the segment tree is constructed upon.
 	int getMidpoint(int ss, int se) const{ // Utility function that gets the midpoint of the range [ss, se]
 		return ss + ((se - ss) / 2); //To avoid overflow
 	}
@@ -41,7 +40,7 @@ class SegmentTree{ /* A tree that supports query and update operations in O(log(
 				return RecursiveQuery(mid + 1, se, st, en, 2 * ti + 1);
 			}
 			else{
-				throw invalid_argument("Invalid Arguments in SegmentTree::RecursiveQuery(int, int, int, int, int)");
+				throw std::invalid_argument("Invalid Arguments in SegmentTree::RecursiveQuery(int, int, int, int, int)");
 			}
 		}
 	}
@@ -78,7 +77,7 @@ class SegmentTree{ /* A tree that supports query and update operations in O(log(
 		return x >= 0 && x < arr.size();
 	}
 public:
-	SegmentTree(const vector<node>& a){ // Constructs the segment tree from an array.
+	SegmentTree(const std::vector<node>& a){ // Constructs the segment tree from an array.
 		int height = ceil(log2(a.size()));
 		int treeSize = 2* int(pow(2, height)) - 1;
 		tree.resize(treeSize);
@@ -109,7 +108,7 @@ public:
 			RecursiveUpdate(0, arr.size() - 1, idx, newValue);
 		}
 	}
-	void SetArray(const vector<node>& a){ // Changes the array upon which the segment tree is constructed.
+	void SetArray(const std::vector<node>& a){ // Changes the array upon which the segment tree is constructed.
 		int height = ceil(log2(a.size()));
 		int treeSize = 2 * int(pow(2, height)) - 1;
 		tree.resize(treeSize);
