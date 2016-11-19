@@ -3,7 +3,10 @@
 
 #include <string>
 
-class Rope{
+class Rope{ /*
+				A data structure that represents a rope of characters. Similar to a string, but supports concatenation, insertion,
+				and deletion in O(log(n)) but has O(log(n)) access time.
+			*/
 	struct node{
 		node* left;
 		node* right;
@@ -99,7 +102,10 @@ class Rope{
 		}
 	}
 public:
-	Rope(const std::string& s, int sl = 1024){
+	Rope(const std::string& s, int sl = 1024){ /*
+													Constructs a rope from a std::string. sl defines the split length, i.e. the maximum
+													length of a string contained in a single node in the rope.
+											   */
 		if (sl < 2)
 			throw std::invalid_argument("Invalid Split Length in Rope::Rope(const std::string&, int)");
 		splitLength = sl;
@@ -111,7 +117,7 @@ public:
 		root->weight = s.length();
 		Adjust(root);
 	}
-	Rope(const Rope& other){
+	Rope(const Rope& other){ // Copy Constructor
 		splitLength = other.splitLength;
 		root = new node;
 		root->weight = other.root->weight;
@@ -124,12 +130,12 @@ public:
 		}
 		RecursiveCopyRope(root, other.root);
 	}
-	char At(int idx) const{
+	char At(int idx) const{ // Returns the character at a specified index.
 		if (idx < 0 || idx >= root->weight)
 			throw std::out_of_range("Subscript Out of Range in Rope::At(int)");
 		return RecursiveIndex(idx, root);
 	}
-	Rope operator+(const Rope& other){
+	Rope operator+(const Rope& other){ // The + operator is overloaded to perform concatenation.
 		node* newRoot = new node;
 		newRoot->left = this->root;
 		newRoot->right = other.root;
@@ -137,6 +143,8 @@ public:
 		newRoot->data = NULL;
 		return Rope(newRoot);
 	}
+	// TODO: Support Deletion in O(log(n))
+	// TODO: Support Subrope Operation in O(log(n))
 };
 
 #endif
